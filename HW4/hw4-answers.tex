@@ -1,0 +1,67 @@
+\documentclass[12pt]{exam}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\newcommand{\ppp}{\par \noindent}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\PS}{\mathcal{P}}
+\pagestyle{empty} 
+
+
+\begin{document}
+
+\centerline{\textbf{CSE 414 HW4}}
+\centerline{Stephen Hung}
+
+
+\begin{questions}
+
+\question 
+
+{\bf Datalog}\\
+Answer(eid,name) :- Employee(eid,name,office), Manager(eid,mid), Managers(eid,mid2), mid != mid2
+
+{\bf Relational Algebra}
+
+$\pi_{employee.eid,employee.name}(\sigma_{count(*)>2}(\gamma_{manager.mid}(Employee \Join_{employee.eid = manager.eid} Manager m)))$
+
+\question
+
+{\bf Datalog}\\
+HasManager(eid,name) :- Employee(eid, name, office), Manager(eid,mid)
+Answer(eid,name) :- Employee(eid,name), NOT HasManager(eid,name)
+
+{\bf Relational Algebra}\\
+$\pi_{employee.eid, employee.name}(Employee - (\pi_{employee.eid} (Employee \Join_{employee.eid = manager.eid} Manager)))$
+
+
+\question 
+
+{\bf Datalog}\\
+aliceManagers(mid) :- Employee(eid, 'Alice', office), Manager(eid,mid)
+Answer(office) :- Employee(mid, name, office), aliceManagers(mid)
+
+{\bf Relational Algebra}\\
+$\pi_{employee.office} (\sigma_{employee.name = 'Alice'}(Employee\Join Manager))$
+
+\question {\bf Datalog}\\
+NotSame(mid) :- Employee(eid, name, office), Manager(eid,mid), Employee(eid2,name2,office2), Manager(eid2,mid), office != office2
+Answer(mid, name, office) :- Employee(mid,name,office), Manager(eid,mid), NOT NotSame(mid) 
+
+{\bf Relational ALgebra}\\
+ $\pi_{m.mid}($Manager AS m - [$\pi_{m.mid}( \sigma_{e.eid != e2.eid, e.office ! = e2.office}((( $Employee AS e $\Join_{e.eid = m.eid}$ Manager AS m$) \Join_{m.mid = m2.mid}$ Manager AS m2$)\Join_{m2.eid = e2.eid} $Employee AS e2$ ))$] )
+
+
+\question {\bf Datalog}\\
+Answer(eid2, name2) :- Employee(eid,name,office), Manager(eid,mid), Manager(eid2, eid), Employee(eid2, name2, office2)
+
+
+{\bf Relational Algebra}\\
+$\pi_{m1.mid = e2.name}(\sigma_{m2.mid != m1.mid}((($Manager AS m1 $\Join_{e.eid = m1.eid} $Employee AS e$)\Join_{m1.eid = m2.mid}$ Manager AS m2$)\Join_{m1.mid = e2.eid}$ Employee AS e2$))
+$
+
+
+\end{questions}
+\end{document}

@@ -1,0 +1,21 @@
+
+Employee(1, steve, washington).
+Employee(2, john, california).
+Employee(3, luke, nevada).
+Employee(4, ryan, idaho).
+Employee(5, andrew, oregon).
+Employee(6, jon, washington).
+Employee(7, chris, washington).
+Employee(8, alice, washington).
+Employee(9, samantha, california).
+Employee(10, samuel, nevada).
+Manager(6,1).
+Manager(7,1).
+Manager(8,1).
+Manager(9,2).
+Manager(10,2).
+Manager(8,2).
+
+
+
+
